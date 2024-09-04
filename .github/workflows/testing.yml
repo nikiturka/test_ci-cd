@@ -1,5 +1,7 @@
 name: Test FastAPI app
-on: push
+on:
+  push:
+  workflow_dispatch:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
@@ -16,7 +18,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Test application
-        run: pytest tests.py
+        run: pytest src/tests.py
 
   run-linter:
     runs-on: ubuntu-latest
@@ -50,7 +52,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run project
-        run: uvicorn main:app --reload
+        run: uvicorn src.main:app --reload
 
       - name: Deploy
         run: echo deploying...
