@@ -1,6 +1,6 @@
 name: Test FastAPI app
 on:
-  push:
+#  push:
   workflow_dispatch:
 jobs:
   run-tests:
