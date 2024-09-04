@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from main import app
+from src.main import app
 
 client = TestClient(app)
 
@@ -13,4 +13,3 @@ def test_read_root():
 def test_simple_arithmetics():
     a, b = 2, 2
     assert a == b
-
