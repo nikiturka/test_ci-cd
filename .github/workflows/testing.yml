@@ -85,5 +85,5 @@ jobs:
         with:
           name: test-report
 
-      - name: Analyze test report
-        run: python analyze_report.py report.xml
+      - name: View test report content
+        run: cat report.xml
