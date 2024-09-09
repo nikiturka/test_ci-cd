@@ -54,7 +54,7 @@ jobs:
   run-project:
     strategy:
       matrix:
-        python-version: [3.10, 3.12]
+        python-version: [3.11, 3.12]
         os: [ubuntu-latest, windows-latest]
     continue-on-error: true
     runs-on: ${{ matrix.os }}
