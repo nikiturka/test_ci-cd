@@ -9,15 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # CUSTOM ACTION FROM GITHUB
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v4 # CUSTOM ACTION FROM GITHUB
         with:
           python-version: '3.11'
 
+      # ADD CACHE FOR DEPENDENCIES
       - name: Cache dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v4 # CUSTOM ACTION FROM GITHUB
         with:
           path: ~/.cache/pip
           key: python-dependencies-${{ hashFiles('**/requirements.txt') }}
@@ -25,11 +26,13 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # GENERATE TEST REPORT
       - name: Run tests
         run: pytest src/tests.py --junitxml=report.xml
 
+      # UPLOAD TEST REPORT
       - name: Upload test report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4 # CUSTOM ACTION FROM GITHUB
         with:
           name: test-report
           path: report.xml
@@ -45,6 +48,7 @@ jobs:
         with:
           python-version: '3.11'
 
+      # ADD CACHE FOR DEPENDENCIES
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
@@ -58,12 +62,14 @@ jobs:
         run: flake8 src
 
   run-project:
+    # TO RUN A PROJECT ON A DIFFERENT OS AND PYTON VERSIONS SIMULTANEOUSLY
     strategy:
       matrix:
         python-version: [3.11, 3.12]
         os: [ubuntu-latest, windows-latest]
     continue-on-error: true
     runs-on: ${{ matrix.os }}
+    # DEPENDS ON THESE JOBS
     needs:
       - run-tests
       - run-linter
@@ -80,6 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: run-tests
     steps:
+      # DOWNLOAD TEST REPORT
       - name: Download test report
         uses: actions/download-artifact@v4
         with:
